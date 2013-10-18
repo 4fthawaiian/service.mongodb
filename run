@@ -1,0 +1,15 @@
+#!/bin/sh
+
+exec 2>&1 \
+envdir ./user_env \
+envdir ./env \
+sh -c '
+        if [ "${REPL}" -eq "1" ]
+        then
+          echo "Replicated server starting.."
+	  REPL_OPT="--shardsvr --replSet ${AASET}/${AAPEERS}"
+        fi
+	export MONGO_OPTS="--rest --dbpath ${MONGO_HOME} ${BIND_IP+"--bind_ip $BIND_IP"} ${REPL_OPT}"
+	exec setuidgid ${USER+"$USER"} \
+	/usr/bin/mongod ${MONGO_OPTS}
+'

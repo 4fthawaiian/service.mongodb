@@ -1,0 +1,1 @@
+ --rest --shardsvr --replSet ${AASET}/${AAPEERS} 
